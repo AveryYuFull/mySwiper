@@ -53,7 +53,7 @@ export default class SwiperClass {
      */
     $on(events, handler, priority) {
         const _that = this;
-        if (!events || 
+        if (!events ||
             ((events instanceof Array) && events.length <= 0) ||
             !handler) {
             return _that;
@@ -140,7 +140,7 @@ export default class SwiperClass {
             data = args.slice(1);
             context = _that;
         } else {
-            [events, data, context] = args[0];
+            [events, data, context = _that] = args[0];
         }
         events = _that._filterEvents(events);
         events.forEach((event) => {

@@ -4,10 +4,18 @@ import each from '../../utils/each';
 import defaults from './defaults';
 import getElements from '../../utils/getElements';
 
+import classes from './classes';
+import update from './update';
+
+import { EVENT_TYPE } from './constants';
+
 /**
  * 业务方法
  */
-const prototypes = [];
+const prototypes = [
+    classes,
+    update
+];
 
 const extendedDefaults = {};
 
@@ -28,6 +36,7 @@ export default class Swiper extends SwiperClass {
         if (!params) {
             params = {};
         }
+        // 记住一定要备份一份新的
         params = extend({}, params);
         if (el && !params.el) {
             params.el = el;
@@ -89,6 +98,9 @@ export default class Swiper extends SwiperClass {
             snapGrid: [],
             slidesSizesGrid: [],
 
+            // Classes
+            classNames: [],
+
             // isDirection
             isHorizontal () {
                 return _that.params.direction === 'horizontal';
@@ -116,6 +128,31 @@ export default class Swiper extends SwiperClass {
             _that._init();
         }
         return _that;
+    }
+
+    /**
+     * 初始化
+     */
+    _init () {
+        const _that = this;
+        if (_that.initialized) {
+            return;
+        }
+        _that.$emit(EVENT_TYPE.BEFORE_INIT);
+
+        // Add Classes
+        _that.addClasses();
+
+        // update size
+        _that.updateSize();
+    }
+
+    /**
+     * 获取SwiperClass
+     * @returns {SwiperClass} 返回SwiperClass
+     */
+    static get Class () {
+        return SwiperClass;
     }
 
     /**
