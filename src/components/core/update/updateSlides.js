@@ -15,7 +15,6 @@ export default function () {
     if (!swiperSize || !wrapperEl) {
         return;
     }
-    const _prevSlidesLen = _that.slides.length;
     const _slides = getElements(params.slideClass, wrapperEl);
     
     let _spaceBetween = callFn(params.spaceBetween, [], _that);
@@ -58,11 +57,10 @@ export default function () {
                     const _marginLeft = _filterStyle(_styles, 'marginLeft');
                     const _marginRight = _filterStyle(_styles, 'marginRight');
                     if (_borderBox === 'border-box') {
-                        _width = _width + _marginLeft + _marginRight
+                        _slideSize = _width + _marginLeft + _marginRight
                     } else {
-                        _width = _width + _marginLeft + _marginRight + _paddingLeft + _paddingRight;
+                        _slideSize = _width + _marginLeft + _marginRight + _paddingLeft + _paddingRight;
                     }
-                    _slideSize = _width;
                 } else {
                     let _height = _filterStyle(_styles, 'height');
                     const _paddingTop = _filterStyle(_styles, 'paddingTop');
@@ -70,11 +68,16 @@ export default function () {
                     const _marginTop = _filterStyle(_styles, 'marginTop');
                     const _marginBottom = _filterStyle(_styles, 'marginBottom');
                     if (_borderBox === 'border-box') {
-                        _height = _height + _marginTop + _marginBottom;
+                        _slideSize = _height + _marginTop + _marginBottom;
                     } else {
-                        _height = _height + _paddingTop + _paddingBottom + _marginTop + _marginBottom;
+                        _slideSize = _height + _paddingTop + _paddingBottom + _marginTop + _marginBottom;
                     }
-                    _slideSize = _height;
+                }
+                if (_transform) {
+                    setStyle(slide, 'transform', _transform);
+                }
+                if (_webkitTransform) {
+                    setStyle(slide, 'webkitTransform', _webkitTransform);
                 }
                 if (params.roundLengths) {
                     _slideSize = Math.floor(_slideSize);
@@ -88,7 +91,7 @@ export default function () {
                 setStyle(slide, _that.isHorizontal() ? 'width' : 'height', _slideSize + 'px');
             }
             
-            slide.swiperSize = _slideSize;
+            slide.swiperSlideSize = _slideSize;
             _slidesSizesGrid.push(_slideSize);
             if (!params.centeredSlides) {
                 if (params.roundLengths) {
@@ -115,19 +118,26 @@ export default function () {
     if (!params.centeredSlides) { // 重新过滤snapGrid，防治最后一屏超过
         let _newSnapSldes = [];
         each(_snapGrid, (snapItem) => {
+            if (params.roundLengths) {
+                snapItem = Math.floor(snapItem);
+            }
             if (snapItem && _virtualSize - snapItem >= swiperSize) {
                 _newSnapSldes.push(snapItem);
             }
         });
-        if ((_virtualSize - snapItem) - (_newSnapSldes[_newSnapSldes.length - 1]) > 1) {
+        if (Math.floor(_virtualSize - snapItem) - Math.floor(_newSnapSldes[_newSnapSldes.length - 1]) > 1) {
             _newSnapSldes.push(_virtualSize - snapItem);
         }
         _snapGrid = _newSnapSldes;
     }
+    if (_snapGrid.length === 0) {
+        _snapGrid = [0];
+    }
 
-    const _slidesSizesGridLen = _that.slidesSizesGrid.length;
-    const _slidesGridLen = _that.slidesGrid.length;
-    const _snapGridLen = _that.snapGrid.length;
+    const _prevSlidesLen = _that.slides.length;
+    const _prevSnapGridLen = _that.snapGrid.length;
+    const _prevSlidesGridLen = _that.slidesGrid.length;
+
     extend(_that, {
         slides: _slides,
         slidesSizesGrid: _slidesSizesGrid,
@@ -135,17 +145,14 @@ export default function () {
         snapGrid: _snapGrid
     });
 
-    if (_previousLen !== _slides.length) {
+    if (_prevSlidesLen !== _slides.length) {
         _that.$emit(EVENT_TYPE.SLIDES_LENGTH_CHANGE, _slides);
     }
-    if (_slidesSizesGridLen !== _that.slidesSizesGrid.length) {
-        _that.$emit(EVENT_TYPE.SLIDES_SIZES_LENGTH_CHANGE, _that.slidesSizesGrid);
+    if (_prevSlidesGridLen !== _that.slidesGrid.length) {
+        _that.$emit(EVENT_TYPE.SLIDES_GRID_LENGTH_CHANGE, _slidesGrid);
     }
-    if (_slidesGridLen !== _that.slidesGrid.length) {
-        _that.$emit(EVENT_TYPE.SLIDE_GRID_LENGTH_CHANGE, _that.slidesGrid);
-    }
-    if (_snapGridLen !== _that.snapGrid.length) {
-        _that.$emit(EVENT_TYPE.SNAP_LENGTH_CHANGE, _that.snapGrid);
+    if (_prevSnapGridLen !== _that.snapGrid.length) {
+        _that.$emit(EVENT_TYPE.SNAP_GRID_LENGTH_CHANGE, _snapGrid);
     }
 }
 

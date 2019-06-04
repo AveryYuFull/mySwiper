@@ -1,6 +1,8 @@
 export default {
     init: true,
     direction: 'horizontal',
+    speed: 300, // 动画时长
+    initialSlide: 0, // 设定初始化时slide的索引
 
     // NS
     containerModifierClass: 'swiper-container',
@@ -16,5 +18,6 @@ export default {
     slidesPerView: 'auto', // swiper容器能同时容纳的slide数量
     roundLengths: false, // 如果设置为true，则将slide的宽／高进行四舍五入
     centeredSlides: false, // 设定为true时，active slide会居中，而不是默认状态下的居左
-    slidesPerGroup: 1 // slides的数量多少为一组
+    slidesPerGroup: 1, // slides的数量多少为一组
+    normalizeSlideIndex: false // 是否序列化slideIndex
 };

@@ -6,6 +6,8 @@ import getElements from '../../utils/getElements';
 
 import classes from './classes';
 import update from './update';
+import slide from './slide';
+import translate from './translate';
 
 import { EVENT_TYPE } from './constants';
 
@@ -14,7 +16,9 @@ import { EVENT_TYPE } from './constants';
  */
 const prototypes = [
     classes,
-    update
+    update,
+    slide,
+    translate
 ];
 
 const extendedDefaults = {};
@@ -143,8 +147,11 @@ export default class Swiper extends SwiperClass {
         // Add Classes
         _that.addClasses();
 
-        // update size
+        // Update size
         _that.updateSize();
+
+        // Update slides
+        _that.updateSlides();
     }
 
     /**
