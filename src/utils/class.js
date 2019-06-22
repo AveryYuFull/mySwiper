@@ -41,6 +41,9 @@ export default class SwiperClass {
         if (typeof events === 'string') {
             events = (events.trim()).split(' ');
         }
+        if (!(events instanceof Array)) {
+            events = [events];
+        }
         return events || [];
     }
 
@@ -140,7 +143,9 @@ export default class SwiperClass {
             data = args.slice(1);
             context = _that;
         } else {
-            [events, data, context = _that] = args[0];
+            events = args[0].events;
+            data = args[0].data;
+            context = args[0].context || _that;
         }
         events = _that._filterEvents(events);
         events.forEach((event) => {

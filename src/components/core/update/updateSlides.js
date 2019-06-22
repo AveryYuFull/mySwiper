@@ -40,59 +40,10 @@ export default function () {
             if (_display === 'none') {
                 return;
             }
-            if (params.slidesPerView === 'auto') {
-                const _transform = _styles['transform'];
-                if (_transform) {
-                    setStyle(slide, 'transform', 'none');
-                }
-                const _webkitTransform = _styles['webkitTransform'];
-                if (_webkitTransform) {
-                    setStyle(slide, 'webkitTransform', 'none');
-                }
-                const _borderBox = _styles['borderBox']; 
-                if (_that.isHorizontal()) {
-                    let _width = _filterStyle(_styles, 'width');
-                    const _paddingLeft = _filterStyle(_styles, 'paddingLeft');
-                    const _paddingRight = _filterStyle(_styles, 'paddingRight');
-                    const _marginLeft = _filterStyle(_styles, 'marginLeft');
-                    const _marginRight = _filterStyle(_styles, 'marginRight');
-                    if (_borderBox === 'border-box') {
-                        _slideSize = _width + _marginLeft + _marginRight
-                    } else {
-                        _slideSize = _width + _marginLeft + _marginRight + _paddingLeft + _paddingRight;
-                    }
-                } else {
-                    let _height = _filterStyle(_styles, 'height');
-                    const _paddingTop = _filterStyle(_styles, 'paddingTop');
-                    const _paddingBottom = _filterStyle(_styles, 'paddingBottom');
-                    const _marginTop = _filterStyle(_styles, 'marginTop');
-                    const _marginBottom = _filterStyle(_styles, 'marginBottom');
-                    if (_borderBox === 'border-box') {
-                        _slideSize = _height + _marginTop + _marginBottom;
-                    } else {
-                        _slideSize = _height + _paddingTop + _paddingBottom + _marginTop + _marginBottom;
-                    }
-                }
-                if (_transform) {
-                    setStyle(slide, 'transform', _transform);
-                }
-                if (_webkitTransform) {
-                    setStyle(slide, 'webkitTransform', _webkitTransform);
-                }
-                if (params.roundLengths) {
-                    _slideSize = Math.floor(_slideSize);
-                }
-            } else {
-                const _slidesPerView = (params && params.slidesPerview) || 1;
-                _slideSize = (swiperSize - ((_slidesPerView - 1) * _spaceBetween)) / _slidesPerView;
-                if (params.roundLengths) {
-                    _slideSize = Math.floor(_slideSize);
-                }
-                setStyle(slide, _that.isHorizontal() ? 'width' : 'height', _slideSize + 'px');
-            }
-            
-            slide.swiperSlideSize = _slideSize;
+            _slideSize = _getSlideSize(_styles, params, _that.isHorizontal());
+            // slide.swiperSlideSize = _slideSize;
             _slidesSizesGrid.push(_slideSize);
+
             if (!params.centeredSlides) {
                 if (params.roundLengths) {
                     _slidePostion = Math.floor(_slidePostion);
@@ -104,7 +55,7 @@ export default function () {
                 }
                 _slidePostion = _slidePostion + _slideSize + _spaceBetween;
             }
-            _virtualSize = _virtualSize + _slideSize + _spaceBetween;
+            _virtualSize = _virtualSize + _spaceBetween +_slideSize;
             
             if (_that.isHorizontal()) {
                 setStyle(slide, 'marginRight', _spaceBetween + 'px');
@@ -125,8 +76,8 @@ export default function () {
                 _newSnapSldes.push(snapItem);
             }
         });
-        if (Math.floor(_virtualSize - snapItem) - Math.floor(_newSnapSldes[_newSnapSldes.length - 1]) > 1) {
-            _newSnapSldes.push(_virtualSize - snapItem);
+        if (Math.floor(_virtualSize - swiperSize) - Math.floor(_newSnapSldes[_newSnapSldes.length - 1]) > 1) {
+            _newSnapSldes.push(_virtualSize - swiperSize);
         }
         _snapGrid = _newSnapSldes;
     }
@@ -154,6 +105,68 @@ export default function () {
     if (_prevSnapGridLen !== _that.snapGrid.length) {
         _that.$emit(EVENT_TYPE.SNAP_GRID_LENGTH_CHANGE, _snapGrid);
     }
+}
+
+/**
+ * 获取slide的size
+ * @param {Object} _styles slide的样式
+ * @param {Object} params 参数
+ * @param {Boolean} isHorizontal 是否是水平的slide
+ * @returns {Number} 返回获取到slide的size
+ */
+function _getSlideSize (_styles, params, isHorizontal) {
+    let _slideSize;
+    if (params.slidesPerView === 'auto') {
+        const _transform = _styles['transform'];
+        if (_transform) {
+            setStyle(slide, 'transform', 'none');
+        }
+        const _webkitTransform = _styles['webkitTransform'];
+        if (_webkitTransform) {
+            setStyle(slide, 'webkitTransform', 'none');
+        }
+        const _borderBox = _styles['borderBox'];
+        if (isHorizontal) {
+            let _width = _filterStyle(_styles, 'width');
+            const _paddingLeft = _filterStyle(_styles, 'paddingLeft');
+            const _paddingRight = _filterStyle(_styles, 'paddingRight');
+            const _marginLeft = _filterStyle(_styles, 'marginLeft');
+            const _marginRight = _filterStyle(_styles, 'marginRight');
+            if (_borderBox === 'border-box') {
+                _slideSize = _width + _marginLeft + _marginRight
+            } else {
+                _slideSize = _width + _marginLeft + _marginRight + _paddingLeft + _paddingRight;
+            }
+        } else {
+            let _height = _filterStyle(_styles, 'height');
+            const _paddingTop = _filterStyle(_styles, 'paddingTop');
+            const _paddingBottom = _filterStyle(_styles, 'paddingBottom');
+            const _marginTop = _filterStyle(_styles, 'marginTop');
+            const _marginBottom = _filterStyle(_styles, 'marginBottom');
+            if (_borderBox === 'border-box') {
+                _slideSize = _height + _marginTop + _marginBottom;
+            } else {
+                _slideSize = _height + _paddingTop + _paddingBottom + _marginTop + _marginBottom;
+            }
+        }
+        if (_transform) {
+            setStyle(slide, 'transform', _transform);
+        }
+        if (_webkitTransform) {
+            setStyle(slide, 'webkitTransform', _webkitTransform);
+        }
+        if (params.roundLengths) {
+            _slideSize = Math.floor(_slideSize);
+        }
+    } else {
+        const _slidesPerView = (params && params.slidesPerview) || 1;
+        _slideSize = (swiperSize - ((_slidesPerView - 1) * _spaceBetween)) / _slidesPerView;
+        if (params.roundLengths) {
+            _slideSize = Math.floor(_slideSize);
+        }
+        setStyle(slide, isHorizontal ? 'width' : 'height', _slideSize + 'px');
+    }
+    return _slideSize;
 }
 
 /**

@@ -8,6 +8,9 @@ export default {
     containerModifierClass: 'swiper-container',
     wrapperClass: 'swiper-wrapper',
     slideClass: 'swiper-slide', // slide元素的class
+    slideActiveClass: 'swiper-slide-active',
+    slidePrevClass: 'swiper-slide-prev',
+    slideNextClass: 'swiper-slide-next',
 
     width: undefined, // swiperContainer的宽度
     height: undefined, // swiperContainer的高度
