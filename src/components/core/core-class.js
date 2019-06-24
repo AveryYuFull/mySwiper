@@ -8,6 +8,7 @@ import classes from './classes';
 import update from './update';
 import slide from './slide';
 import translate from './translate';
+import transition from './transition';
 
 import { EVENT_TYPE } from './constants';
 
@@ -18,7 +19,8 @@ const prototypes = [
     classes,
     update,
     slide,
-    translate
+    translate,
+    transition
 ];
 
 const extendedDefaults = {};
