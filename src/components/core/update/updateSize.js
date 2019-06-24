@@ -40,6 +40,7 @@ export default function () {
 /**
  * 过滤样式属性
  * @param {String} styles 样式属性列表
+ * @param {String} prop 样式属性名
  * @returns {Number} 返回过滤后的属性
  */
 function _getStyle (styles, prop) {

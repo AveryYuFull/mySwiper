@@ -192,10 +192,12 @@ export default class SwiperClass {
      */
     useModulesParams (params) {
         const _that = this;
-        const _modules = _that.modules || [];
-        _modules.forEach((mod) => {
+        const _modules = _that.modules || {};
+        each(_modules, (mod) => {
             const _params = mod && mod.params;
-            _params && extend(params, _params);
+            if (_params) {
+                extend(params, _params);
+            }
         });
     }
 
@@ -217,13 +219,13 @@ export default class SwiperClass {
         if (mod.proto) {
             each(mod.proto, (proto, key) => {
                 key && (Class.prototype[key] = proto);
-            })
+            });
         }
         // Class
         if (mod.static) {
-            each(mod.static, (static, key) => {
-                key && (Class[key] = static);
-            })
+            each(mod.static, (staticItem, key) => {
+                key && (Class[key] = staticItem);
+            });
         }
         // install
         callFn(mod.install, params, Class);

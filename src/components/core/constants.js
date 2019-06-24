@@ -1,4 +1,4 @@
-import prefixStyle from "../../utils/prefixStyle";
+import prefixStyle from '../../utils/prefixStyle';
 
 /**
  * 默认配置信息
@@ -11,7 +11,7 @@ export const DEFAULT_CONFIG = {
     loop: false, // 是否循环
 
     // NS
-    containerModifierClass: 'swiper-container',
+    containerModifierClass: 'swiper-container-',
     wrapperClass: 'swiper-wrapper',
     slideClass: 'swiper-slide', // slide元素的class
     slideActiveClass: 'swiper-slide-active',
@@ -37,6 +37,7 @@ export const DEFAULT_CONFIG = {
  * 事件类型
  */
 export const EVENT_TYPE = {
+    INIT: 'init', // 初始化完成
     BEFORE_INIT: 'beforeInit', // 初始化前
     SLIDES_LENGTH_CHANGE: 'slidesLengthChange', // slides长度改变
     SNAP_GRID_LENGTH_CHANGE: 'snapGridLengthChange', // snapGrid长度改变

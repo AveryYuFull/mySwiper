@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Device = (function Device() {
   const ua = window.navigator.userAgent;
 

@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../constants";
+import { EVENT_TYPE } from '../constants';
 
 /**
  * transitionend的事件回调
@@ -19,7 +19,7 @@ export default function transitionEnd (runCallbacks, dir) {
             dir = 'next';
         }
     }
-    
+
     _that.$emit(EVENT_TYPE.TRANSITION_END);
     if (runCallbacks) {
         if (dir === 'next') {

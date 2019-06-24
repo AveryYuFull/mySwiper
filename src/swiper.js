@@ -1,6 +1,6 @@
 import Swiper from './components/core/core-class';
 
-import Device from './modules/device';
+import Device from './modules/device/device';
 
 const _modules = [
     Device

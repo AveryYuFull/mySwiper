@@ -1,7 +1,6 @@
 import each from './each';
 import isBrowser from './isBrowser';
 
-
 const _vendor = (function () {
     let _prefix;
     if (isBrowser) {

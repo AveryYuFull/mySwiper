@@ -1,5 +1,5 @@
-import { EVENT_TYPE } from "../constants";
-import extend from "../../../utils/extend";
+import { EVENT_TYPE } from '../constants';
+import extend from '../../../utils/extend';
 
 /**
  * 更新活动索引
