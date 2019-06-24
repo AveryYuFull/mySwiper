@@ -28,7 +28,7 @@ export default {
             spaceBetween: 20,
             slidesPerView: 3,
             normalizeSlideIndex: false,
-            initialSlide: 3
+            initialSlide: 0
         });
         console.log('_swiper', _swiper);
     }

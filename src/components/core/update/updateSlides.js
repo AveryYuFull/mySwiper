@@ -160,7 +160,7 @@ function _getSlideSize (slide, _styles, params, isHorizontal, swiperSize, _space
             _slideSize = Math.floor(_slideSize);
         }
     } else {
-        const _slidesPerView = (params && params.slidesPerview) || 1;
+        const _slidesPerView = (params && params.slidesPerView) || 1;
         _slideSize = (swiperSize - ((_slidesPerView - 1) * _spaceBetween)) / _slidesPerView;
         if (params.roundLengths) {
             _slideSize = Math.floor(_slideSize);
