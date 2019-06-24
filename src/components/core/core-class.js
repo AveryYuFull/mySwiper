@@ -1,7 +1,6 @@
 import SwiperClass from '../../utils/class';
 import extend from '../../utils/extend';
 import each from '../../utils/each';
-import defaults from './defaults';
 import getElements from '../../utils/getElements';
 
 import classes from './classes';
@@ -10,7 +9,7 @@ import slide from './slide';
 import translate from './translate';
 import transition from './transition';
 
-import { EVENT_TYPE } from './constants';
+import { EVENT_TYPE, DEFAULT_CONFIG } from './constants';
 
 /**
  * 业务方法
@@ -48,7 +47,7 @@ export default class Swiper extends SwiperClass {
             params.el = el;
         }
         super(params);
-        
+
         // 挂载业务方法到原型
         each(prototypes, (prototype, index) => {
             each(prototype, (method, key) => {
@@ -61,7 +60,7 @@ export default class Swiper extends SwiperClass {
             _that.modules = {};
         }
 
-        const _swiperParams = extend({}, defaults);
+        const _swiperParams = extend({}, DEFAULT_CONFIG);
         _that.useModulesParams(_swiperParams);
 
         _that.params = extend({}, _swiperParams, extendedDefaults, params);
@@ -94,7 +93,7 @@ export default class Swiper extends SwiperClass {
         extend(_that, {
             // el
             $el,
-            el, 
+            el,
             $wrapperEl,
             wrapperEl: $wrapperEl[0],
 
@@ -141,6 +140,7 @@ export default class Swiper extends SwiperClass {
      */
     _init () {
         const _that = this;
+        const _params = _that.params || {};
         if (_that.initialized) {
             return;
         }
@@ -154,6 +154,10 @@ export default class Swiper extends SwiperClass {
 
         // Update slides
         _that.updateSlides();
+
+        if (!_params.loop) {
+            _that.slideTo(_params.initialSlide || 0, 0, _params.runCallbacksOnInit);
+        }
     }
 
     /**
@@ -166,7 +170,7 @@ export default class Swiper extends SwiperClass {
 
     /**
      * 继承默认的参数
-     * @param {*} newDefaults 
+     * @param {*} newDefaults
      */
     static extendDefaults (newDefaults) {
         extend(extendedDefaults, newDefaults);

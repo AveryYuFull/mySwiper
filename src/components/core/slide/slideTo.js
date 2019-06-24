@@ -1,4 +1,5 @@
-import { EVENT_TYPE } from '../constants';
+import { EVENT_TYPE, styleName } from '../constants';
+import isTransition from '../../../utils/isTransition';
 
 /**
  * 滑动到指定的slide
@@ -13,7 +14,7 @@ export default function slideTo (index, speed, runCallbacks = true) {
     speed = _params.speed || 0;
     const _activeIndex = _that.activeIndex || 0;
     const _previousIndex = _that.previousIndex;
-    
+
     if (_that.animating && _params.preventInteractionOnTransition) {
         return;
     }
@@ -58,6 +59,43 @@ export default function slideTo (index, speed, runCallbacks = true) {
             _that.transitionEnd(runCallbacks, _dir);
         }
         return false;
+    }
+    if (speed === 0 || !isTransition()) {
+        _that.setTransition(0);
+        _that.setTranslate(_translate);
+        _that.updateActiveIndex(_slideIndex);
+        _that.updateSlidesClasses();
+        _that.$emit(EVENT_TYPE.BEFORE_TRANSITION_START);
+        _that.transitionStart(runCallbacks, _dir);
+        _that.transitionEnd(runCallbacks, _dir);
+    } else {
+        _that.setTransition(speed);
+        _that.setTranslate(_translate);
+        _that.updateActiveIndex(_slideIndex);
+        _that.updateSlidesClasses();
+        _that.$emit(EVENT_TYPE.BEFORE_TRANSITION_START);
+        _that.transitionStart(runCallbacks, _dir);
+        if (!_that.animating) {
+            _that.animating = true;
+            const _wrapperEl = _that.wrapperEl;
+            if (!_that.onSlideToWrapperTransitionEnd) {
+                _that.onSlideToWrapperTransitionEnd = function (evt) {
+                   if (!_that || _that.destroyed ||
+                        _that !== evt.target) {
+                       return;
+                   }
+                   if (_wrapperEl) {
+                       _wrapperEl.removeEventListener(styleName.transitionEnd, _that.onSlideToWrapperTransitionEnd);
+                   }
+                   _that.onSlideToWrapperTransitionEnd = null;
+                   delete _that.onSlideToWrapperTransitionEnd;
+                   _that.transitionEnd(runCallbacks, _dir);
+                };
+            }
+            if (_wrapperEl) {
+                _wrapperEl.addEventListener(styleName.transitionEnd, _that.onSlideToWrapperTransitionEnd);
+            }
+        }
     }
 }
 

@@ -28,7 +28,7 @@ export default function setTranslate (translate) {
         _style = `translate(${x}px, ${y}px)`;
     }
     if (_style) {
-        setStyle(_that.wrapperEl, styleName.TRANSFORM, _style);
+        setStyle(_that.wrapperEl, styleName.transform, _style);
     }
 
     _that.previousTranslate = _that.translate;
