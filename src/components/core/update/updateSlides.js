@@ -1,10 +1,10 @@
-import getElements from "../../../utils/getElements";
+import getElements from '../../../utils/getElements';
 import callFn from '../../../utils/callFn';
-import each from "../../../utils/each";
-import getStyle from "../../../utils/getStyle";
+import each from '../../../utils/each';
+import getStyle from '../../../utils/getStyle';
 import setStyle from '../../../utils/setStyle';
 import extend from '../../../utils/extend';
-import { EVENT_TYPE } from "../constants";
+import { EVENT_TYPE } from '../constants';
 
 /**
  * 更新slide的大小
@@ -15,8 +15,7 @@ export default function () {
     if (!swiperSize || !wrapperEl) {
         return;
     }
-    const _slides = getElements(params.slideClass, wrapperEl);
-    
+    const _slides = getElements(`.${params.slideClass}`, wrapperEl);
     let _spaceBetween = callFn(params.spaceBetween, [], _that);
     if (typeof _spaceBetween === 'string' && _spaceBetween.indexOf('%') > -1) {
         _spaceBetween = (parseFloat(_spaceBetween.replace('%', '')) / 100) * swiperSize;
@@ -29,7 +28,7 @@ export default function () {
     let _snapGrid = [];
 
     let _slidePostion = -_offsetBefore;
-    let _virtualSize = -spaceBetween;
+    let _virtualSize = -_spaceBetween;
 
     let _slideSize = 0;
     each(_slides, (slide, index) => {
@@ -40,7 +39,7 @@ export default function () {
             if (_display === 'none') {
                 return;
             }
-            _slideSize = _getSlideSize(_styles, params, _that.isHorizontal());
+            _slideSize = _getSlideSize(slide, _styles, params, _that.isHorizontal(), swiperSize, _spaceBetween);
             // slide.swiperSlideSize = _slideSize;
             _slidesSizesGrid.push(_slideSize);
 
@@ -49,14 +48,14 @@ export default function () {
                     _slidePostion = Math.floor(_slidePostion);
                 }
                 _slidesGrid.push(_slidePostion);
-                const _slidesPerGroup = params && params.slidesPerGroup || 1;
+                const _slidesPerGroup = (params && params.slidesPerGroup) || 1;
                 if ((index % _slidesPerGroup) === 0) {
                     _snapGrid.push(_slidePostion);
                 }
                 _slidePostion = _slidePostion + _slideSize + _spaceBetween;
             }
             _virtualSize = _virtualSize + _spaceBetween +_slideSize;
-            
+
             if (_that.isHorizontal()) {
                 setStyle(slide, 'marginRight', _spaceBetween + 'px');
             } else {
@@ -64,7 +63,6 @@ export default function () {
             }
         }
     });
-
     _virtualSize = Math.max(_virtualSize, swiperSize) + _offsetAfter;
     if (!params.centeredSlides) { // 重新过滤snapGrid，防治最后一屏超过
         let _newSnapSldes = [];
@@ -109,12 +107,15 @@ export default function () {
 
 /**
  * 获取slide的size
+ * @param {HTMLElement} slide slide元素
  * @param {Object} _styles slide的样式
  * @param {Object} params 参数
  * @param {Boolean} isHorizontal 是否是水平的slide
+ * @param {Number} swiperSize swiper的大小
+ * @param {Number} _spaceBetween slide 之间间隔
  * @returns {Number} 返回获取到slide的size
  */
-function _getSlideSize (_styles, params, isHorizontal) {
+function _getSlideSize (slide, _styles, params, isHorizontal, swiperSize, _spaceBetween) {
     let _slideSize;
     if (params.slidesPerView === 'auto') {
         const _transform = _styles['transform'];
@@ -133,7 +134,7 @@ function _getSlideSize (_styles, params, isHorizontal) {
             const _marginLeft = _filterStyle(_styles, 'marginLeft');
             const _marginRight = _filterStyle(_styles, 'marginRight');
             if (_borderBox === 'border-box') {
-                _slideSize = _width + _marginLeft + _marginRight
+                _slideSize = _width + _marginLeft + _marginRight;
             } else {
                 _slideSize = _width + _marginLeft + _marginRight + _paddingLeft + _paddingRight;
             }
@@ -159,7 +160,7 @@ function _getSlideSize (_styles, params, isHorizontal) {
             _slideSize = Math.floor(_slideSize);
         }
     } else {
-        const _slidesPerView = (params && params.slidesPerview) || 1;
+        const _slidesPerView = (params && params.slidesPerView) || 1;
         _slideSize = (swiperSize - ((_slidesPerView - 1) * _spaceBetween)) / _slidesPerView;
         if (params.roundLengths) {
             _slideSize = Math.floor(_slideSize);
@@ -181,5 +182,5 @@ function _filterStyle (styles, prop) {
     }
     let _style = styles[prop] || '0';
     _style = _style.replace(/[^.-\d+]/g, '') || '0';
-    return parseFloat(_style, 10) || 0; 
+    return parseFloat(_style, 10) || 0;
 }

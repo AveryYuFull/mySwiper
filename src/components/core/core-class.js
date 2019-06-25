@@ -28,7 +28,7 @@ export default class Swiper extends SwiperClass {
     /**
      * 构造方法
      * @param  {...any} args 参数
-     * @returns
+     * @returns {Swiper|Array<Swiper>}
      */
     constructor (...args) {
         let params;
@@ -47,11 +47,14 @@ export default class Swiper extends SwiperClass {
             params.el = el;
         }
         super(params);
+        const _that = this;
 
         // 挂载业务方法到原型
         each(prototypes, (prototype, index) => {
             each(prototype, (method, key) => {
-                key && (_that.prototype[key] = method);
+                if (key && !Swiper.prototype[key]) {
+                    Swiper.prototype[key] = method;
+                }
             });
         });
 
@@ -88,7 +91,7 @@ export default class Swiper extends SwiperClass {
         el.swiper = _that;
 
         // find wrapper
-        const $wrapperEl = getElements(_that.params.wrapperClass, el);
+        const $wrapperEl = getElements(`.${_that.params.wrapperClass}`, el);
 
         extend(_that, {
             // el
@@ -147,6 +150,7 @@ export default class Swiper extends SwiperClass {
         _that.$emit(EVENT_TYPE.BEFORE_INIT, {
             context: _that
         });
+
         // Add Classes
         _that.addClasses();
         // Update size
@@ -172,7 +176,7 @@ export default class Swiper extends SwiperClass {
 
     /**
      * 继承默认的参数
-     * @param {*} newDefaults
+     * @param {*} newDefaults 新的参数
      */
     static extendDefaults (newDefaults) {
         extend(extendedDefaults, newDefaults);

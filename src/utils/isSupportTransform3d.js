@@ -1,13 +1,22 @@
+import each from './each';
+let _isSupportTransform3d;
 /**
  * 判读是否支持transform3d
  * @returns {Boolean}
  */
 export default function isSupportTransform3d () {
-    let _res = window.Modernizr && window.Modernizr.csstransforms3d === true;
-    if (!_res) {
+    let _res;
+    if (typeof _isSupportTransform3d === 'undefined') {
+        _res = window.Modernizr && window.Modernizr.csstransforms3d === true;
         const _testDiv = document.createElement('div');
-        const style = _testDiv.style;
-        _res = 'webkitPerspective' in style || 'MozPerspective' in style || 'OPerspective' in style || 'MsPerspective' in style || 'perspective' in style;
+        const _style = _testDiv.style;
+        const _vendors = ['webkitPerspective', 'MozPerspective', 'OPerspective', 'MsPerspective', 'perspective'];
+        each(_vendors, (v) => {
+            _res = v in _style;
+            return _res;
+        });
+    } else {
+        _res = _isSupportTransform3d;
     }
     return _res;
 }

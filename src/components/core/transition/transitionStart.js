@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../constants";
+import { EVENT_TYPE } from '../constants';
 
 /**
  * 开始滑动动画
@@ -20,15 +20,15 @@ export default function transitionStart (runCallbacks, dir) {
     }
     _that.$emit(EVENT_TYPE.TRANSITION_START);
     if (runCallbacks) {
-        if (_dir === 'reset') {
+        if (dir === 'reset') {
             _that.$emit(EVENT_TYPE.SLIDE_RESET_TRANSITION_START);
             return;
         }
 
         _that.$emit(EVENT_TYPE.SLIDE_CHANGE_TRANSITION_START);
-        if (_dir === 'prev') {
+        if (dir === 'prev') {
             _that.$emit(EVENT_TYPE.SLIDE_PREV_TRANSITION_START);
-        } else if (_dir === 'next') {
+        } else if (dir === 'next') {
             _that.$emit(EVENT_TYPE.SLIDE_NEXT_TRANSITION_START);
         }
     }

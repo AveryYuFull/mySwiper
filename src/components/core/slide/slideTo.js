@@ -6,10 +6,11 @@ import isTransition from '../../../utils/isTransition';
  * @param {Number} index slide索引
  * @param {Number} speed 滑动动画时间
  * @param {Boolean} runCallbacks 是否开启冒泡事件
+ * @returns {Boolean}
  */
 export default function slideTo (index, speed, runCallbacks = true) {
     const _that = this;
-    const _slideIndex = index || 0;
+    let _slideIndex = index || 0;
     const _params = _that.params || {};
     speed = _params.speed || 0;
     const _activeIndex = _that.activeIndex || 0;
@@ -33,12 +34,12 @@ export default function slideTo (index, speed, runCallbacks = true) {
             _slideIndex = i;
         }
     }
-    if ( _activeIndex || _params.initialSlide || 0 === _previousIndex || 0) {
+    if ((_activeIndex || _params.initialSlide || 0) === (_previousIndex || 0)) {
         _that.$emit(EVENT_TYPE.BEFORE_SLIDE_CHANGE_START);
     }
     if (_that.initialized && _slideIndex !== _activeIndex) {
         if ((!_that.allowSlideNext && _translate < _that.translate && _translate < _that.minTranslate()) ||
-        !_that.allowSlidePrev && _translate > _that.translate && _translate > _that.maxTranslate()) {
+        (!_that.allowSlidePrev && _translate > _that.translate && _translate > _that.maxTranslate())) {
             return false;
         }
     }
@@ -80,16 +81,16 @@ export default function slideTo (index, speed, runCallbacks = true) {
             const _wrapperEl = _that.wrapperEl;
             if (!_that.onSlideToWrapperTransitionEnd) {
                 _that.onSlideToWrapperTransitionEnd = function (evt) {
-                   if (!_that || _that.destroyed ||
+                    if (!_that || _that.destroyed ||
                         _that !== evt.target) {
-                       return;
-                   }
-                   if (_wrapperEl) {
-                       _wrapperEl.removeEventListener(styleName.transitionEnd, _that.onSlideToWrapperTransitionEnd);
-                   }
-                   _that.onSlideToWrapperTransitionEnd = null;
-                   delete _that.onSlideToWrapperTransitionEnd;
-                   _that.transitionEnd(runCallbacks, _dir);
+                        return;
+                    }
+                    if (_wrapperEl) {
+                        _wrapperEl.removeEventListener(styleName.transitionEnd, _that.onSlideToWrapperTransitionEnd);
+                    }
+                    _that.onSlideToWrapperTransitionEnd = null;
+                    delete _that.onSlideToWrapperTransitionEnd;
+                    _that.transitionEnd(runCallbacks, _dir);
                 };
             }
             if (_wrapperEl) {
@@ -114,7 +115,7 @@ function _getSnapIndex (slideIndex, slidesPerGroup, snapLen) {
     } else if (_snapIndex > snapLen - 1) {
         _snapIndex = snapLen - 1;
     }
-    return _snapIndex
+    return _snapIndex;
 }
 
 /**
