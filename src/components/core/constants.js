@@ -70,6 +70,7 @@ export const DEFAULT_CONFIG = {
 export const EVENT_TYPE = {
     INIT: 'init', // 初始化完成
     BEFORE_INIT: 'beforeInit', // 初始化前
+    INIT: 'init', // 初始化完成
     SLIDES_LENGTH_CHANGE: 'slidesLengthChange', // slides长度改变
     SNAP_GRID_LENGTH_CHANGE: 'snapGridLengthChange', // snapGrid长度改变
     SLIDES_GRID_LENGTH_CHANGE: 'slidesGridLengthChange', // slidesGrid改变

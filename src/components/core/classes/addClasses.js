@@ -20,10 +20,11 @@ export default function () {
     });
     _that.classNames = classNames.concat(_classNames);
     if (el) {
-        _that.classNames.forEach((className) => {
-            if (className) {
-                el.classList.add(className);
-            }
-        });
+        // _that.classNames.forEach((className) => {
+        //     if (className) {
+        //         el.classList.add(className);
+        //     }
+        // });
+        el.className = el.className + ' ' + _that.classNames.join(' ');
     }
 }

@@ -21,15 +21,9 @@ export default class SwiperClass {
         /**
          * 处理事件
          */
-        const _events = params && params.on;
-        if (_events) {
-            for (let key in _events) {
-                if (_events.hasOwnProperty(key)) {
-                    const _fn = _events[key];
-                    _that.$on(key, _fn.bind(_that));
-                }
-            }
-        }
+        each(params && params.on, (_fn, key) => {
+            _that.$on(key, _fn.bind(_that));
+        });
     }
 
     /**
@@ -159,15 +153,16 @@ export default class SwiperClass {
 
     /**
      * 执行module里的方法
-     * @param {*} moduleParams 参数
+     * @param {*} modulesParams 参数
      */
-    useModules (moduleParams) {
+    useModules (modulesParams) {
         const _that = this;
         const _modules = _that.modules;
         if (!_modules) {
             return;
         }
-        each(_modules, (mod) => {
+        each(_modules, (mod, moduleName) => {
+            const _moduleParams = modulesParams && modulesParams[moduleName];
             if (mod.instance) {
                 each(mod.instance, (prop, key) => {
                     if (prop instanceof Function) {
@@ -182,7 +177,7 @@ export default class SwiperClass {
                     _that.$on(event, handler);
                 });
             }
-            callFn(mod.create, moduleParams, _that);
+            callFn(mod.create, _moduleParams, _that);
         });
     }
 

@@ -68,11 +68,11 @@ export default class Swiper extends SwiperClass {
         _that.useModulesParams(_swiperParams);
 
         _that.params = extend({}, _swiperParams, extendedDefaults, params);
-        _that.originalParams = extend({}, _that.params);
-        _that.passedParams = extend({}, params);
+        // _that.originalParams = extend({}, _that.params);
+        // _that.passedParams = extend({}, params);
 
         // find el
-        const $el = getElements(el);
+        const $el = getElements(params.el);
         el = $el[0];
         if (!el) {
             return undefined;
@@ -179,17 +179,14 @@ export default class Swiper extends SwiperClass {
 
         // Add Classes
         _that.addClasses();
-
         // Update size
         _that.updateSize();
-
         // Update slides
         _that.updateSlides();
-
         if (!_params.loop) {
             _that.slideTo(_params.initialSlide || 0, 0, _params.runCallbacksOnInit);
         }
-
+        _that.initialized = true;
         _that.$emit(EVENT_TYPE.INIT, {
             context: _that
         });
