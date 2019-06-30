@@ -2,6 +2,7 @@ import SwiperClass from '../../utils/class';
 import extend from '../../utils/extend';
 import each from '../../utils/each';
 import getElements from '../../utils/getElements';
+import getTouchEvents from '../../utils/getTouchEvents';
 
 import classes from './classes';
 import update from './update';
@@ -128,7 +129,32 @@ export default class Swiper extends SwiperClass {
 
             // locked
             allowSlideNext: _that.params.allowSlideNext,
-            allowSlidePrev: _that.params.allowSlidePrev
+            allowSlidePrev: _that.params.allowSlidePrev,
+
+            // Touch Events
+            touchEvents: getTouchEvents(_params.simulateTouch),
+            touchEventsData: {
+                isTouchEvent: undefined,
+                isTouched: undefined,
+                touchStartTime: undefined,
+                isMoved: undefined,
+                isScrolling: undefined,
+                startMoving: undefined,
+                allowTouchCallbacks: undefined,
+                startTranslate: undefined,
+                currentTranslate: undefined,
+                allowThresholdMove: undefined,
+                formElements: /input|select|textarea|option|button|video/
+            },
+            // Touches
+            allowTouchMove: _params.allowTouchMove,
+            touches: {
+                startX: 0,
+                startY: 0,
+                currentX: 0,
+                currentY: 0,
+                diff: 0
+            }
         });
 
         _that.useModules();

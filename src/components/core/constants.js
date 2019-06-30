@@ -30,7 +30,38 @@ export const DEFAULT_CONFIG = {
     slidesPerGroup: 1, // slides的数量多少为一组
     normalizeSlideIndex: false, // 是否序列化slideIndex
 
-    runCallbacksOnInit: true // 是否冒泡事件
+    runCallbacksOnInit: true, // 是否冒泡事件
+    touchEventsTarget: 'container', // touchstart的目标对象
+    simulateTouch:  true, // 模拟移动端的touch事件
+    allowTouchMove: true, // 是否允许swiper移动
+    noSwiping: true, // 是否可以swiper
+    noSwipingSelector: null, // 不可以swiper的元素selector
+    noSwipingClass: 'swiper-no-swiping', // 不可以swiper的class
+    nested: false,
+    
+    // To support iOS's swipe-to-go-back gesture (when being used in-app, with UIWebView).
+    edgeSwipeDetection: false,
+    edgeSwipeThreshold: 20,
+
+    // loop
+    loop: false,
+    
+    // Touches
+    threshold: 0,
+    touchAngle: 45,
+    touchStartPreventDefault: true, // touchstart时是否阻止事件的默认行为
+    touchStartForcePreventDefault: false, // 是否touchStart强制阻止事件的默认行为
+    touchReleaseOnEdges: false,
+    touchMoveStopPropagation: true,
+    touchRatio: 1,
+    followFinger: true,
+
+    // Cursor
+    grabCursor: false,
+
+    // Resistance
+    resistance: true,
+    resistanceRatio: 0.85,
 };
 
 /**
@@ -60,7 +91,12 @@ export const EVENT_TYPE = {
     SLIDE_NEXT_TRANSITION_END: 'slideNextTransitionEnd',
     BEFORE_TRANSITION_START: 'beforeTransitionStart',
 
-    SET_TRANSLATE: 'setTranslate'
+    SET_TRANSLATE: 'setTranslate',
+
+    TOUCH_START: 'touchStart',
+    TOUCH_MOVE_OPPOSITE: 'touchMoveOpposite',
+    SLIDER_FIRST_MOVE: 'sliderFirstMove',
+    SLIDER_MOVE: 'sliderMove'
 };
 
 /**
