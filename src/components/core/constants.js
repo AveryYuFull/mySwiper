@@ -55,6 +55,10 @@ export const DEFAULT_CONFIG = {
     touchMoveStopPropagation: true,
     touchRatio: 1,
     followFinger: true,
+    longSwipesMs: 300,
+    longSwipes: true,
+    longSwipesRatio: 0.5,
+    shortSwipes: true,
 
     // Cursor
     grabCursor: false,

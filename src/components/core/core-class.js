@@ -9,6 +9,7 @@ import update from './update';
 import slide from './slide';
 import translate from './translate';
 import transition from './transition';
+import grabCursor from './grab-cursor';
 
 import { EVENT_TYPE, DEFAULT_CONFIG } from './constants';
 
@@ -20,7 +21,8 @@ const prototypes = [
     update,
     slide,
     translate,
-    transition
+    transition,
+    grabCursor
 ];
 
 const extendedDefaults = {};

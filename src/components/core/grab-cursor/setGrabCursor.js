@@ -8,7 +8,7 @@ export default function setGrabCursor (moving) {
     const _that = this;
     const _params = _that.params || {};
     const _el = _that.el;
-    if (isTouch || _params.simulateTouch || !_el) {
+    if (isTouch || !_params.simulateTouch || !_el) {
         return;
     }
     let _styles;
