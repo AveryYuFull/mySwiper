@@ -7,11 +7,11 @@
         <div class="swiper-slide">Slide 3</div>
         <div class="swiper-slide">Slide 4</div>
         <div class="swiper-slide">Slide 5</div>
-        <div class="swiper-slide">Slide 6</div>
+        <!-- <div class="swiper-slide">Slide 6</div>
         <div class="swiper-slide">Slide 7</div>
         <div class="swiper-slide">Slide 8</div>
         <div class="swiper-slide">Slide 9</div>
-        <div class="swiper-slide">Slide 10</div>
+        <div class="swiper-slide">Slide 10</div> -->
       </div>
     </div>
   </div>
@@ -24,10 +24,10 @@ export default {
     mounted () {
         const _that = this;
         let _swiper = new Swiper('.swiper-container', {
-            slidesOffsetBefore: 400,
+            // slidesOffsetBefore: 400,
             spaceBetween: 20,
-            slidesPerView: 3,
-            normalizeSlideIndex: false,
+            slidesPerView: 2,
+            // normalizeSlideIndex: false,
             initialSlide: 0
         });
         console.log('_swiper', _swiper);
@@ -60,6 +60,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  user-select: none;
 }
 .swiper-wrapper {
   position: relative;

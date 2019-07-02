@@ -10,6 +10,7 @@ import slide from './slide';
 import translate from './translate';
 import transition from './transition';
 import grabCursor from './grab-cursor';
+import initEvents from './events';
 
 import { EVENT_TYPE, DEFAULT_CONFIG } from './constants';
 
@@ -22,7 +23,8 @@ const prototypes = [
     slide,
     translate,
     transition,
-    grabCursor
+    grabCursor,
+    initEvents
 ];
 
 const extendedDefaults = {};
@@ -134,7 +136,7 @@ export default class Swiper extends SwiperClass {
             allowSlidePrev: _that.params.allowSlidePrev,
 
             // Touch Events
-            touchEvents: getTouchEvents(_params.simulateTouch),
+            touchEvents: getTouchEvents(!_that.params.simulateTouch),
             touchEventsData: {
                 isTouchEvent: undefined,
                 isTouched: undefined,
@@ -149,7 +151,7 @@ export default class Swiper extends SwiperClass {
                 formElements: /input|select|textarea|option|button|video/
             },
             // Touches
-            allowTouchMove: _params.allowTouchMove,
+            allowTouchMove: _that.params.allowTouchMove,
             touches: {
                 startX: 0,
                 startY: 0,
@@ -188,6 +190,8 @@ export default class Swiper extends SwiperClass {
         if (!_params.loop) {
             _that.slideTo(_params.initialSlide || 0, 0, _params.runCallbacksOnInit);
         }
+        console.log('_that.', _that);
+        _that.initEvents(true);
         _that.initialized = true;
         _that.$emit(EVENT_TYPE.INIT, {
             context: _that

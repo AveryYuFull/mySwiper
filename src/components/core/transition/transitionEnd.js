@@ -7,7 +7,8 @@ import { EVENT_TYPE } from '../constants';
  */
 export default function transitionEnd (runCallbacks, dir) {
     const _that = this;
-    _that.animating = true;
+    _that.animating = false;
+    _that.setTransition(0);
     if (!dir) {
         const _activeIndex = _that.activeIndex;
         const _previousIndex = _that.previousIndex;

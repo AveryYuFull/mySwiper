@@ -13,7 +13,7 @@ export default function isSupportTransform3d () {
         const _vendors = ['webkitPerspective', 'MozPerspective', 'OPerspective', 'MsPerspective', 'perspective'];
         each(_vendors, (v) => {
             _res = v in _style;
-            return _res;
+            return !_res;
         });
     } else {
         _res = _isSupportTransform3d;

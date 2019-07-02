@@ -31,11 +31,12 @@ export default function extend (target, ...rest) {
                             let children = (isObjectAndArray(target[key]) && target[key]) || ((sourceItem instanceof Array) ? [] : {});
                             target[key] = extend(children, sourceItem);
                         } else {
-                            if (typeof sourceItem !== 'undefined') {
-                                target[key] = sourceItem;
-                            } else if (typeof target[key] === 'undefined') {
-                                target[key] = sourceItem;
-                            }
+                            target[key] = sourceItem;
+                            // if (typeof sourceItem !== 'undefined') {
+                            //     target[key] = sourceItem;
+                            // } else if (typeof target[key] === 'undefined') {
+                            //     target[key] = sourceItem;
+                            // }
                         }
                     }
                 }

@@ -70,7 +70,7 @@ export default function () {
             if (params.roundLengths) {
                 snapItem = Math.floor(snapItem);
             }
-            if (snapItem && _virtualSize - snapItem >= swiperSize) {
+            if (_virtualSize - snapItem >= swiperSize) {
                 _newSnapSldes.push(snapItem);
             }
         });

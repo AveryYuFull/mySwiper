@@ -5,7 +5,7 @@ import { EVENT_TYPE } from '../constants';
 /**
  * touchMove事件回调
  * @param {Event} evt 事件对象
- * 
+ *
  * 总结:
  * 1. 如果isTouched为false，则退出，如果isScrolling为true且startMoving为true，则冒泡touchMoveOpposite事件
  * 2. 如果touchmove事件类型和touchstart事件类型不一样，则退出
@@ -64,8 +64,8 @@ export default function onTouchMove (evt) {
         return;
     }
 
-    _touches.currentX = pageX;
-    _touches.currentY = pageY;
+    _touches.currentX = _pageX;
+    _touches.currentY = _pageY;
     const _diffX = _touches.currentX - _touches.startX;
     const _diffY = _touches.currentY - _touches.startY;
     if (_params.threshold > 0 && Math.sqrt((_diffX ** 2) + (_diffY ** 2)) < _params.threshold) {
@@ -85,7 +85,7 @@ export default function onTouchMove (evt) {
             let _touchAngle = (Math.atan2(Math.abs(_diffY), Math.abs(_diffX)) * 180) / Math.PI;
             _isScrolling = _that.isHorizontal() ? _touchAngle > _params.touchAngle : (90 - _touchAngle) > _params.touchAngle;
         }
-        _touchData = _isScrolling;
+        _touchData.isScrolling = _isScrolling;
     }
     /**
      * 设置startMoving
@@ -123,7 +123,7 @@ export default function onTouchMove (evt) {
     _that.$emit(EVENT_TYPE.SLIDER_MOVE, evt);
     _touchData.isMoved = true;
 
-     _diff = _that.isHorizontal() ? _diffX : _diffY;
+    let _diff = _that.isHorizontal() ? _diffX : _diffY;
     _touches.diff = _diff;
     _diff *= _params.touchRatio;
     _that.swipeDirection = _diff > 0 ? 'prev' : 'next';
@@ -134,20 +134,22 @@ export default function onTouchMove (evt) {
     }
     if (_params.resistance) {
         if (_diff > 0 && _touchData.currentTranslate > _that.minTranslate()) {
-            _touchData.currentTranslate = (_that.minTranslate() - 1) + (_touchData.currentTranslate - _that.minTranslate()) ** _resistanceRatio; 
+            _touchData.currentTranslate = (_that.minTranslate() - 1) +
+                (_touchData.currentTranslate - _that.minTranslate()) ** _resistanceRatio;
         } else if (_diff < 0 && _touchData.currentTranslate < _that.maxTranslate()) {
-            _touchData.currentTranslate = (_that.maxTranslate() + 1) - (_that.maxTranslate() - _touchData.currentTranslate) ** _resistanceRatio;
+            _touchData.currentTranslate = (_that.maxTranslate() + 1) -
+                (_that.maxTranslate() - _touchData.currentTranslate) ** _resistanceRatio;
         }
     }
+
     // direction locked
     if ((!_that.allowSlideNext && _that.swipeDirection === 'next' && _touchData.currentTranslate < _touchData.startTranslate) ||
-    !_that.allowSlidePrev && _that.swipeDirection === 'prev' && _touchData.currentTranslate > _touchData.startTranslate) {
+    (!_that.allowSlidePrev && _that.swipeDirection === 'prev' && _touchData.currentTranslate > _touchData.startTranslate)) {
         _touchData.currentTranslate = _touchData.startTranslate;
     }
-    
+
     if (_params.followFinger) {
         return;
     }
-
     _that.setTranslate(_touchData.currentTranslate);
 }

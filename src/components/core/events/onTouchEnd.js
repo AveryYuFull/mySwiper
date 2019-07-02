@@ -24,7 +24,6 @@ export default function onTouchEnd (evt) {
         _touchData.startMoving = false;
         return;
     }
-
     if (_params.grabCursor && _touchData.isTouched && _touchData.isMoved && (_that.allowSlideNext || _that.allowSlidePrev)) {
         _that.setGrabCursor(false);
     }
@@ -33,20 +32,23 @@ export default function onTouchEnd (evt) {
     const _touchEndTime = getNow();
     const _timeDiff = _touchEndTime - _touchData.touchStartTime;
 
+    if (!_touchData.isTouched || !_touchData.isMoved || _touchData.diff === 0 ||
+        !_that.swipeDirection || _touchData.currentTranslate === _touchData.startTranslate) {
+        _touchData.isTouched = false;
+        _touchData.isMoved = false;
+        _touchData.startMoving = false;
+        return;
+    }
     _touchData.isTouched = false;
     _touchData.isMoved = false;
     _touchData.startMoving = false;
-    if (!_touchData.isTouched || !_touchData.isMoved || _touchData.diff === 0 ||
-        !_that.swipeDirection || _touchData.currentTranslate === _touchData.startTranslate) {
-        return;
-    }
 
-    const _currentPos = _touchData.currentTranslate;
+    const _currentPos = -_touchData.currentTranslate;
 
     const _slidesGrid = _that.slidesGrid || [];
     const _slidesSizeGrid = _that.slidesSizeGrid || [];
     const _slidesPerGroup = _params.slidesPerGroup || 1;
-    let _stopIndex;
+    let _stopIndex = 0;
     let _groupSize = _slidesSizeGrid[0];
     for (let i = 0; i < _slidesGrid.length; i += _slidesPerGroup) {
         if (typeof _slidesGrid[i + _slidesPerGroup] !== 'undefined') {
@@ -61,9 +63,6 @@ export default function onTouchEnd (evt) {
             break;
         }
     }
-    if (typeof _stopIndex === 'undefined') {
-        return;
-    }
     const _ratio = (_currentPos - _slidesGrid[_stopIndex]) / _groupSize;
     /**
      * 长时间的滑动
@@ -73,8 +72,8 @@ export default function onTouchEnd (evt) {
     if (_timeDiff > _params.longSwipesMs) {
         if (!_params.longSwipes) {
             _slideIndex = _that.activeIndex;
-        } else if (_swipeDirection === 'next' && 
-            _ratio >= _params.longSwipesRati) {
+        } else if (_swipeDirection === 'next' &&
+            _ratio >= _params.longSwipesRatio) {
             _slideIndex = _stopIndex + _slidesPerGroup;
         } else if (_swipeDirection === 'prev' &&
             _ratio > (1 - _params.longSwipesRatio)) {

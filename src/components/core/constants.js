@@ -8,7 +8,6 @@ export const DEFAULT_CONFIG = {
     direction: 'horizontal',
     speed: 300, // 动画时长
     initialSlide: 0, // 设定初始化时slide的索引
-    loop: false, // 是否循环
 
     // NS
     containerModifierClass: 'swiper-container-',
@@ -32,20 +31,25 @@ export const DEFAULT_CONFIG = {
 
     runCallbacksOnInit: true, // 是否冒泡事件
     touchEventsTarget: 'container', // touchstart的目标对象
-    simulateTouch:  true, // 模拟移动端的touch事件
+    simulateTouch: true, // 模拟移动端的touch事件
     allowTouchMove: true, // 是否允许swiper移动
-    noSwiping: true, // 是否可以swiper
-    noSwipingSelector: null, // 不可以swiper的元素selector
-    noSwipingClass: 'swiper-no-swiping', // 不可以swiper的class
     nested: false,
-    
+
+    // Swiping/no swiping
+    allowSlidePrev: true,
+    allowSlideNext: true,
+    swipeHandler: null, // '.swipe-handler',
+    noSwiping: true,
+    noSwipingClass: 'swiper-no-swiping',
+    noSwipingSelector: null,
+
     // To support iOS's swipe-to-go-back gesture (when being used in-app, with UIWebView).
     edgeSwipeDetection: false,
     edgeSwipeThreshold: 20,
 
     // loop
     loop: false,
-    
+
     // Touches
     threshold: 0,
     touchAngle: 45,
@@ -54,7 +58,7 @@ export const DEFAULT_CONFIG = {
     touchReleaseOnEdges: false,
     touchMoveStopPropagation: true,
     touchRatio: 1,
-    followFinger: true,
+    followFinger: false,
     longSwipesMs: 300,
     longSwipes: true,
     longSwipesRatio: 0.5,
@@ -65,7 +69,7 @@ export const DEFAULT_CONFIG = {
 
     // Resistance
     resistance: true,
-    resistanceRatio: 0.85,
+    resistanceRatio: 0.85
 };
 
 /**
@@ -74,7 +78,6 @@ export const DEFAULT_CONFIG = {
 export const EVENT_TYPE = {
     INIT: 'init', // 初始化完成
     BEFORE_INIT: 'beforeInit', // 初始化前
-    INIT: 'init', // 初始化完成
     SLIDES_LENGTH_CHANGE: 'slidesLengthChange', // slides长度改变
     SNAP_GRID_LENGTH_CHANGE: 'snapGridLengthChange', // snapGrid长度改变
     SLIDES_GRID_LENGTH_CHANGE: 'slidesGridLengthChange', // slidesGrid改变
@@ -108,6 +111,7 @@ export const EVENT_TYPE = {
  * 样式名称
  */
 export const styleName = {
+    transitionDuration: prefixStyle('transitionDuration'),
     transition: prefixStyle('transition'),
     transform: prefixStyle('transform'),
     transitionEnd: prefixStyle('transitionEnd')

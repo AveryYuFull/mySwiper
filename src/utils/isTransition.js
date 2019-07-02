@@ -10,10 +10,10 @@ export default function isTransition () {
         const _testDiv = document.createElement('div');
         const _vendors = ['webkitTransition', 'MozTransition', 'OTransition', 'msTransition', 'transition'];
         const _styles = _testDiv.style;
-        each((_vendors, (v) => {
+        each(_vendors, (v) => {
             _res = v in _styles;
-            return _res;
-        }));
+            return !_res;
+        });
     } else {
         _res = _isTransition;
     }

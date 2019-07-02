@@ -32,7 +32,7 @@ export default function initEventListener (el, types, fn, flag, capture, context
      */
     function _initEvent (type) {
         if (type) {
-            el[flag ? 'add' : 'remove' + 'EventListener'](type, fn.bind(context), capture);
+            el[(flag ? 'add' : 'remove') + 'EventListener'](type, fn.bind(context), capture);
         }
     }
 }

@@ -7,7 +7,7 @@ const isTouch = (function () {
     if (!isBrowser()) {
         return false;
     }
-    
+
     let _res;
     if (window.Modernizr && window.Modernizr.touch === true) {
         _res = true;

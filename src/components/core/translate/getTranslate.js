@@ -1,6 +1,7 @@
-import getTranslate from '../../../utils/getTranslate';
+import _getTranslate from '../../../utils/getTranslate';
 /**
  * 获取元素的translate
+ * @param {String} axis 方向
  * @returns {Number}
  */
 export default function getTranslate (axis) {
@@ -8,5 +9,5 @@ export default function getTranslate (axis) {
     if (typeof axis === 'undefined') {
         axis = _that.isHorizontal() ? 'x' : 'y';
     }
-    return getTranslate(_that.wrapperEl, axis);
+    return _getTranslate(_that.wrapperEl, axis);
 }

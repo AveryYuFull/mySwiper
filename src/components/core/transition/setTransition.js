@@ -9,6 +9,6 @@ export default function setTransition (speed) {
     const _that = this;
     const _wrapperEl = _that.wrapperEl;
     if (_wrapperEl) {
-        setStyle(_wrapperEl, styleName.transition, speed || 0);
+        setStyle(_wrapperEl, styleName.transitionDuration, `${speed || 0}ms`);
     }
 }

@@ -5,7 +5,7 @@ import { EVENT_TYPE } from '../constants';
 /**
  * touchStart开始前
  * @param {Event} evt 事件对象
- * 
+ *
  * 总结：
  * 1. 如果swiper处于animating状态，且preventInteractionOnTransition设置为true，则退出
  * 2. 如果不是touchEvents,
@@ -14,9 +14,10 @@ import { EVENT_TYPE } from '../constants';
  * 3. 如果isTouched为true且isMoved为true，则退出
  * 4. 如果noSwiping为true，且同时通过noSwipingSelector/noSwipingClass找到了父级元素，则退出
  * 5. 如果设置了swiperHandle，则如果没有找到则退出
- * 6. 如果设置了edgeSwipeDetection/iOSEdgeSwipeDetection，且如果当前的startX小于等于edgeSwipeThreshold/(window.screen.width - startX)小于等于edgeSwipeThreshold 
+ * 6. 如果设置了edgeSwipeDetection/iOSEdgeSwipeDetection，且如果当前的startX小于等于edgeSwipeThreshold/(window.screen.width - startX)小于等于edgeSwipeThreshold
  */
 export default function onTouchStart (evt) {
+    console.log('onTouchStart');
     if (!evt) {
         return;
     }
@@ -29,8 +30,8 @@ export default function onTouchStart (evt) {
     }
     const _type = (evt.type || '') + '';
     _touchData.isTouchEvent = _type === 'touchstart';
-    if (!_isTouchEvent && (('which' in evt && evt.which !== 1) ||
-        'button' in evt && evt.button !== 0)) {
+    if (!_touchData.isTouchEvent && (('which' in evt && evt.which !== 1) ||
+        ('button' in evt && evt.button !== 0))) {
         return;
     }
     if (_touchData.isTouched && _touchData.isMoved) {
@@ -49,8 +50,8 @@ export default function onTouchStart (evt) {
     const _edgeSwipeDetection = _params.edgeSwipeDetection || _params.iOSEdgeSwipeDetection;
     const _edgeSwipeThreshold = _params.edgeSwipeThreshold || _params.iOSEdgeSwipeThreshold;
     if (_edgeSwipeDetection &&
-        (_startX <= _edgeSwipeThreshold) ||
-        (_startX >= (window.screen.width - _edgeSwipeThreshold))) {
+        ((_startX <= _edgeSwipeThreshold) ||
+        (_startX >= (window.screen.width - _edgeSwipeThreshold)))) {
         return;
     }
 
