@@ -17,7 +17,6 @@ import { EVENT_TYPE } from '../constants';
  * 6. 如果设置了edgeSwipeDetection/iOSEdgeSwipeDetection，且如果当前的startX小于等于edgeSwipeThreshold/(window.screen.width - startX)小于等于edgeSwipeThreshold
  */
 export default function onTouchStart (evt) {
-    console.log('onTouchStart');
     if (!evt) {
         return;
     }
