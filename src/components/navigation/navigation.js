@@ -70,17 +70,44 @@ const Navigation = {
     },
     /**
      * 点击next的回调
-     * @param {Event} evt 事件对象
      */
-    onNextClick (evt) {
-        console.log('onNextClick-->', evt);
+    onNextClick () {
+        const _that = this;
+        const _params = _that.params || {};
+        if (_params.loop || _that.isEnd) {
+            return;
+        }
+        _that.slideNext();
     },
     /**
      * 点击prev的回调
-     * @param {Event} evt 事件对象
      */
-    onPrevClick (evt) {
-        console.log('onPrevClick--->', evt);
+    onPrevClick () {
+        const _that = this;
+        const _params = _that.params || {};
+        if (_params.loop || _that.isBeginning) {
+            return;
+        }
+        _that.slidePrev();
+    },
+    /**
+     * 销毁
+     */
+    destroy () {
+        const _that = this;
+        const _navigation = _that.navigation || {};
+        const _nextEl = _navigation.nextEl;
+        const _prevEl = _navigation.prevEl;
+        const _params = _that.params || {};
+        const _paginationParams = _params.pagination || {};
+        if (_nextEl) {
+            _nextEl.classList && _nextEl.classList.remove(_paginationParams.disabledClass);
+            _nextEl.removeEventListener('click', _that.onNextClick);
+        }
+        if (_prevEl) {
+            _prevEl.classList && _prevEl.classList.remove(_paginationParams.disabledClass);
+            _prevEl.removeEventListener('click', _that.onPrevClick);
+        }
     }
 };
 
@@ -99,7 +126,8 @@ export default {
                 init: Navigation.init.bind(_that),
                 onNextClick: Navigation.onNextClick.bind(_that),
                 onPrevClick: Navigation.onPrevClick.bind(_that),
-                update: Navigation.update.bind(_that)
+                update: Navigation.update.bind(_that),
+                destroy: Navigation.destroy.bind(_that)
             }
         });
     },
@@ -111,6 +139,27 @@ export default {
             const _that = this;
             const _navigation = _that.navigation || {};
             callFn(_navigation.init);
+            callFn(_navigation.update);
+        },
+        /**
+         * 到达边缘
+         */
+        toEdge () {
+            const _that = this;
+            const _navigation = _that.navigation || {};
+            callFn(_navigation.update);
+        },
+        /**
+         * 离开边缘
+         */
+        fromEdge () {
+            const _that = this;
+            const _navigation = _that.navigation || {};
+            callFn(_navigation.update);
+        },
+        destroy () {
+            const _navigation = _that.navigation || {};
+            callFn(_navigation.destroy);
         }
     }
 };

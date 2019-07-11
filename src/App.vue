@@ -47,6 +47,9 @@ export default {
     width: 34px;
     background: #fff;
     cursor: pointer;
+    &.swiper-button-disabled {
+      display: none;
+    }
 }
 .swiper-button-next {
     right: 29px;

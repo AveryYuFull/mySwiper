@@ -10,6 +10,8 @@ export default function updateProgress (translate) {
     let _isBegin = _that.isBeginning;
     let _isEnd = _that.isEnd;
     let _progress = _that.progress;
+    let _isBeginBak = _isBegin;
+    let _isEndBak = _isEnd;
 
     const _translateDiff = _that.maxTranslate() - _that.minTranslate();
     if (_translateDiff === 0) {
@@ -28,14 +30,14 @@ export default function updateProgress (translate) {
         progress: _progress
     });
 
-    if (_isBegin && !_that.isBeginning) {
+    if (_isBegin && !_isBeginBak) {
         _that.$emit(`${EVENT_TYPE.REACH_TO_BEGINNING} ${EVENT_TYPE.TO_EDGE}`);
     }
-    if (_isEnd && !_that.isEnd) {
+    if (_isEnd && !_isEndBak) {
         _that.$emit(`${EVENT_TYPE.REACH_TO_END} ${EVENT_TYPE.TO_EDGE}`);
     }
-    if ((!_isBegin && _that.isBeginning) ||
-        (!_isEnd && _that.isEnd)) {
+    if ((!_isBegin && _isBeginBak) ||
+        (!_isEnd && _isEndBak)) {
         _that.$emit(EVENT_TYPE.FROM_ENDGE);
     }
     _that.$emit(EVENT_TYPE.PROGRESS, _progress);
