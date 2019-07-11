@@ -13,6 +13,8 @@
         <div class="swiper-slide">Slide 9</div>
         <div class="swiper-slide">Slide 10</div> -->
       </div>
+      <div class="swiper-button-prev">&lt;</div>
+      <div class="swiper-button-next">&gt;</div>
     </div>
   </div>
 </template>
@@ -35,7 +37,24 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+.swiper-button-prev, .swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    border: 1px solid #d9d9d9;
+    width: 34px;
+    background: #fff;
+    cursor: pointer;
+}
+.swiper-button-next {
+    right: 29px;
+}
+.swiper-button-prev {
+    left: 5px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -57,6 +76,7 @@ body {
   padding: 0;
 }
 .swiper-container {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;

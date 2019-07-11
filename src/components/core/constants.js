@@ -69,7 +69,10 @@ export const DEFAULT_CONFIG = {
 
     // Resistance
     resistance: true,
-    resistanceRatio: 0.85
+    resistanceRatio: 0.85,
+
+    // navigation
+    uniqueNavElements: true // 是否优先在container里查找元素
 };
 
 /**
@@ -104,7 +107,13 @@ export const EVENT_TYPE = {
     TOUCH_START: 'touchStart',
     TOUCH_MOVE_OPPOSITE: 'touchMoveOpposite',
     SLIDER_FIRST_MOVE: 'sliderFirstMove',
-    SLIDER_MOVE: 'sliderMove'
+    SLIDER_MOVE: 'sliderMove',
+
+    REACH_TO_BEGINNING: 'reachToBeginning',
+    REACH_TO_END: 'reachToEnd',
+    TO_EDGE: 'toEdge',
+    FROM_ENDGE: 'fromEdge',
+    PROGRESS: 'progress'
 };
 
 /**

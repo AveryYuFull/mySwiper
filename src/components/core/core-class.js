@@ -122,6 +122,10 @@ export default class Swiper extends SwiperClass {
                 return _that.params.direction === 'vertical';
             },
 
+            isBeginning: true,
+            isEnd: false,
+            progress: 0,
+
             // index
             activeIndex: 0,
             realIndex: 0,

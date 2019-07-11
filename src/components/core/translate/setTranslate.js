@@ -33,5 +33,6 @@ export default function setTranslate (translate) {
 
     _that.previousTranslate = _that.translate;
     _that.translate = _that.isHorizontal() ? x : y;
+    _that.updateProgress();
     _that.$emit(EVENT_TYPE.SET_TRANSLATE, _that.translate);
 }
