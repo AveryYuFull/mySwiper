@@ -2,10 +2,12 @@ import Swiper from './components/core/core-class';
 
 import Device from './modules/device/device';
 import Navigation from './components/navigation/navigation';
+import Pagination from './components/pagination/pagination';
 
 const _modules = [
     Device,
-    Navigation
+    Navigation,
+    Pagination
 ];
 
 if (typeof Swiper.use === 'undefined') {
