@@ -1,5 +1,4 @@
 import each from './each';
-import callFn from './callFn';
 /**
  * 为元素添加classname
  * @param {Array|HTMLElement} elems 目标元素
@@ -26,7 +25,11 @@ export default function addRemoveClass (elems, classNames, isAdd) {
     function _addClass (el, classNames) {
         each(classNames, (className) => {
             if (className && el && el.classList) {
-                callFn(isAdd ? el.classList.add : el.classList.remove, [className]);
+                if (isAdd) {
+                    el.classList.add(className);
+                } else {
+                    el.classList.remove(className);
+                }
             }
         });
     }

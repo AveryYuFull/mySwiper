@@ -114,8 +114,8 @@ const Navigation = {
 export default {
     params: {
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: null,
+            prevEl: null,
             disabledClass: 'swiper-button-disabled'
         }
     },

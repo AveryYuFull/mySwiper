@@ -7,14 +7,15 @@
         <div class="swiper-slide">Slide 3</div>
         <div class="swiper-slide">Slide 4</div>
         <div class="swiper-slide">Slide 5</div>
-        <!-- <div class="swiper-slide">Slide 6</div>
+        <div class="swiper-slide">Slide 6</div>
         <div class="swiper-slide">Slide 7</div>
         <div class="swiper-slide">Slide 8</div>
         <div class="swiper-slide">Slide 9</div>
-        <div class="swiper-slide">Slide 10</div> -->
+        <div class="swiper-slide">Slide 10</div>
       </div>
       <div class="swiper-button-prev">&lt;</div>
       <div class="swiper-button-next">&gt;</div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
 </template>
@@ -30,9 +31,17 @@ export default {
             spaceBetween: 20,
             slidesPerView: 2,
             // normalizeSlideIndex: false,
-            initialSlide: 0
+            initialSlide: 0,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                dynamicMainBullets: 1
+            }
         });
-        console.log('_swiper', _swiper);
+        // console.log('_swiper', _swiper);
     }
 };
 </script>
@@ -64,7 +73,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+  overflow: hidden;
 }
 html, body {
   position: relative;
@@ -133,6 +143,6 @@ body {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  height: 100px;
+  height: 100%;;
 }
 </style>

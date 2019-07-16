@@ -126,7 +126,7 @@ function _getSlideSize (slide, _styles, params, isHorizontal, swiperSize, _space
         if (_webkitTransform) {
             setStyle(slide, 'webkitTransform', 'none');
         }
-        const _borderBox = _styles['borderBox'];
+        const _borderBox = _styles['boxSizing'];
         if (isHorizontal) {
             let _width = _filterStyle(_styles, 'width');
             const _paddingLeft = _filterStyle(_styles, 'paddingLeft');
