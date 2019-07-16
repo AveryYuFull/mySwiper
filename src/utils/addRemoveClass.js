@@ -1,4 +1,5 @@
 import each from './each';
+import isArrayLike from './isArrayLike';
 /**
  * 为元素添加classname
  * @param {Array|HTMLElement} elems 目标元素
@@ -41,7 +42,7 @@ export default function addRemoveClass (elems, classNames, isAdd) {
  * @returns {Array}
  */
 function _toArray (data) {
-    if (!Array.isArray(data)) {
+    if (!isArrayLike(data)) {
         data = [data];
     }
     return data;

@@ -113,7 +113,10 @@ export const EVENT_TYPE = {
     REACH_TO_END: 'reachToEnd',
     TO_EDGE: 'toEdge',
     FROM_ENDGE: 'fromEdge',
-    PROGRESS: 'progress'
+    PROGRESS: 'progress',
+
+    PAGINATION_RENDER: 'paginationRender', // 分页渲染
+    PAGINATION_UPDATE: 'paginationUpdate' // 分页更新
 };
 
 /**

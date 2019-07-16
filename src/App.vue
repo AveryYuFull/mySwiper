@@ -38,7 +38,9 @@ export default {
             },
             pagination: {
                 el: '.swiper-pagination',
-                dynamicMainBullets: 1
+                // type: 'fraction'
+                // type: 'progressbar'
+                dynamicMainBullets: 2
             }
         });
         // console.log('_swiper', _swiper);
