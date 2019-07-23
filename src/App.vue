@@ -16,6 +16,7 @@
       <div class="swiper-button-prev">&lt;</div>
       <div class="swiper-button-next">&gt;</div>
       <div class="swiper-pagination"></div>
+      <div class="swiper-scrollbar"></div>
     </div>
   </div>
 </template>
@@ -29,18 +30,21 @@ export default {
         let _swiper = new Swiper('.swiper-container', {
             // slidesOffsetBefore: 400,
             spaceBetween: 20,
-            slidesPerView: 2,
+            slidesPerView: 1,
             // normalizeSlideIndex: false,
             initialSlide: 0,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev'
             },
-            pagination: {
-                el: '.swiper-pagination',
-                // type: 'fraction'
-                // type: 'progressbar'
-                dynamicMainBullets: 2
+            // pagination: {
+            //     el: '.swiper-pagination',
+            //     // type: 'fraction'
+            //     // type: 'progressbar'
+            //     dynamicMainBullets: 2
+            // },
+            scrollbar: {
+                el: '.swiper-scrollbar'
             }
         });
         // console.log('_swiper', _swiper);

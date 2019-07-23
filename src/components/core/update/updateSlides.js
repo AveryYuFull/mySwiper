@@ -91,7 +91,8 @@ export default function () {
         slides: _slides,
         slidesSizesGrid: _slidesSizesGrid,
         slidesGrid: _slidesGrid,
-        snapGrid: _snapGrid
+        snapGrid: _snapGrid,
+        virtualSize: _virtualSize
     });
 
     if (_prevSlidesLen !== _slides.length) {

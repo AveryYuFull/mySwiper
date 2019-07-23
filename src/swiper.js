@@ -3,11 +3,13 @@ import Swiper from './components/core/core-class';
 import Device from './modules/device/device';
 import Navigation from './components/navigation/navigation';
 import Pagination from './components/pagination/pagination';
+import Scrollbar from './components/scrollbar/scrollbar';
 
 const _modules = [
     Device,
     Navigation,
-    Pagination
+    Pagination,
+    Scrollbar
 ];
 
 if (typeof Swiper.use === 'undefined') {
