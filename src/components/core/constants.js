@@ -103,6 +103,7 @@ export const EVENT_TYPE = {
     BEFORE_TRANSITION_START: 'beforeTransitionStart',
 
     SET_TRANSLATE: 'setTranslate',
+    SET_TRANSITION: 'setTransition',
 
     TOUCH_START: 'touchStart',
     TOUCH_MOVE_OPPOSITE: 'touchMoveOpposite',
