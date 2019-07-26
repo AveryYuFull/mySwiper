@@ -129,3 +129,36 @@ export const styleName = {
     transform: prefixStyle('transform'),
     transitionEnd: prefixStyle('transitionEnd')
 };
+
+/**
+ * touch事件
+ */
+export const TOUCH_EVENT = '1';
+
+/**
+ * mouse事件
+ */
+export const MOUSE_EVENT = '2';
+
+/**
+ * pointer事件
+ */
+export const POINTER_EVENT = '3';
+
+/**
+ * 事件类型
+ */
+export const eventType = {
+    'touchstart': TOUCH_EVENT,
+    'touchmove': TOUCH_EVENT,
+    'touchend': TOUCH_EVENT,
+    'mousedown': MOUSE_EVENT,
+    'mousemove': MOUSE_EVENT,
+    'mouseup': MOUSE_EVENT,
+    'pointerdown': POINTER_EVENT,
+    'pointermove': POINTER_EVENT,
+    'pointerup': POINTER_EVENT,
+    'MsPointerDown': POINTER_EVENT,
+    'MsPointerMove': POINTER_EVENT,
+    'MsPointerUp': POINTER_EVENT
+}
